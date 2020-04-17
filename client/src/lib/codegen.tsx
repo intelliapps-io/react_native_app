@@ -13,6 +13,56 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+  DateTime: any;
+};
+
+export type Account = {
+  id: Scalars['ID'];
+  accountType: AccountType;
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  name: Scalars['String'];
+  email: Scalars['String'];
+  phone?: Maybe<Scalars['String']>;
+  authCount?: Maybe<Scalars['Float']>;
+};
+
+export enum AccountType {
+  Admin = 'admin',
+  Parent = 'parent',
+  Student = 'student'
+}
+
+export type Admin = {
+  id: Scalars['ID'];
+  accountType: AccountType;
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  name: Scalars['String'];
+  email: Scalars['String'];
+  phone?: Maybe<Scalars['String']>;
+  authCount?: Maybe<Scalars['Float']>;
+};
+
+
+export type Group = {
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  description: Scalars['String'];
+  minMenteeGradeLevel: Scalars['Int'];
+  minMentorGradeLevel: Scalars['Int'];
+};
+
+export type Meeting = {
+  id: Scalars['ID'];
+  date: Scalars['DateTime'];
+  /** minutes since midnight */
+  startMin: Scalars['Int'];
+  /** minutes since midnight */
+  endMin: Scalars['Int'];
+  title: Scalars['String'];
+  description: Scalars['String'];
 };
 
 export type Mutation = {
@@ -30,6 +80,18 @@ export type MutationCreateUserArgs = {
   input: SignUpInput;
 };
 
+export type Parent = {
+  id: Scalars['ID'];
+  accountType: AccountType;
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  name: Scalars['String'];
+  email: Scalars['String'];
+  phone?: Maybe<Scalars['String']>;
+  authCount?: Maybe<Scalars['Float']>;
+  children: Array<Student>;
+};
+
 export type Query = {
   me: User;
 };
@@ -40,6 +102,21 @@ export type SignUpInput = {
   email: Scalars['String'];
   password: Scalars['String'];
   role: UserRole;
+};
+
+export type Student = {
+  id: Scalars['ID'];
+  accountType: AccountType;
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  name: Scalars['String'];
+  email: Scalars['String'];
+  phone?: Maybe<Scalars['String']>;
+  authCount?: Maybe<Scalars['Float']>;
+  parents: Array<Parent>;
+  mentor?: Maybe<Student>;
+  mentee?: Maybe<Student>;
+  gradeLevel: Scalars['Int'];
 };
 
 export type User = {

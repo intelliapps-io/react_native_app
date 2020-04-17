@@ -4,14 +4,10 @@ import { StyleSheet } from "react-native"
 
 export const PageLayout: React.FC<LayoutProps & { useFlex?: boolean }> = props => {
   const flexStyle = props.useFlex ? { flex: 1, alignItems: 'center' } : {}
-  let style = {...flexStyle}
-  if (props.style)
-    // @ts-ignore
-    style = { ...style, ...props.style}
-  
+
   return (
     //@ts-ignore
-    <Layout style={style} {...props}>
+    <Layout {...props} style={[flexStyle, props.style]}>
       {props.children}
     </Layout>
   );

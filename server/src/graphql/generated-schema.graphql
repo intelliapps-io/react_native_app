@@ -3,9 +3,75 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Account {
+  id: ID!
+  accountType: AccountType!
+  firstName: String!
+  lastName: String!
+  name: String!
+  email: String!
+  phone: String
+  authCount: Float
+}
+
+enum AccountType {
+  admin
+  parent
+  student
+}
+
+type Admin {
+  id: ID!
+  accountType: AccountType!
+  firstName: String!
+  lastName: String!
+  name: String!
+  email: String!
+  phone: String
+  authCount: Float
+}
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+type Group {
+  id: ID!
+  name: String!
+  description: String!
+  minMenteeGradeLevel: Int!
+  minMentorGradeLevel: Int!
+}
+
+type Meeting {
+  id: ID!
+  date: DateTime!
+
+  """minutes since midnight"""
+  startMin: Int!
+
+  """minutes since midnight"""
+  endMin: Int!
+  title: String!
+  description: String!
+}
+
 type Mutation {
   signUp(input: SignUpInput!): String!
   createUser(input: SignUpInput!): User!
+}
+
+type Parent {
+  id: ID!
+  accountType: AccountType!
+  firstName: String!
+  lastName: String!
+  name: String!
+  email: String!
+  phone: String
+  authCount: Float
+  children: [Student!]!
 }
 
 type Query {
@@ -18,6 +84,21 @@ input SignUpInput {
   email: String!
   password: String!
   role: UserRole!
+}
+
+type Student {
+  id: ID!
+  accountType: AccountType!
+  firstName: String!
+  lastName: String!
+  name: String!
+  email: String!
+  phone: String
+  authCount: Float
+  parents: [Parent!]!
+  mentor: Student
+  mentee: Student
+  gradeLevel: Int!
 }
 
 type User {

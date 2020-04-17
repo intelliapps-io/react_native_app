@@ -8,12 +8,7 @@ interface NavbarProps {
 
 }
 
-
-export const BackIcon: React.FC<any> = props => {
-  return (
-    <Icon {...props} name='arrow-back' />
-  );
-}
+const BackIcon: React.FC<any> = props => <Icon {...props} name='arrow-back' />
 
 export const Navbar: React.FC<NavbarProps & StackHeaderProps> = props => {
   const navigation = useNavigation()
