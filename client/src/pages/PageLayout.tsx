@@ -7,7 +7,7 @@ interface PageLayoutProps {
 
 export const PageLayout: React.FC<PageLayoutProps> = props => {
   return (
-    <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <Layout style={{ flex: 1, alignItems: 'center' }}>
       {props.children}
     </Layout>
   );
