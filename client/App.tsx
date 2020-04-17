@@ -30,11 +30,6 @@ const client = new ApolloClient({
 
 
 export default () => {
-
-  useEffect(() => {
-
-  }, [])
-
   return (
     <SafeAreaProvider>
       <IconRegistry icons={EvaIconsPack} />

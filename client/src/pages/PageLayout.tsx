@@ -1,13 +1,9 @@
 import React from "react"
-import { ApplicationProvider, IconRegistry, Layout, Text, Icon, Button } from '@ui-kitten/components'
+import { Layout, LayoutProps } from '@ui-kitten/components'
 
-interface PageLayoutProps {
-  
-}
-
-export const PageLayout: React.FC<PageLayoutProps> = props => {
+export const PageLayout: React.FC<LayoutProps & {useFlex?: boolean}> = props => {
   return (
-    <Layout style={{ flex: 1, alignItems: 'center' }}>
+    <Layout style={props.useFlex ? { flex: 1, alignItems: 'center' } : {}} {...props}>
       {props.children}
     </Layout>
   );

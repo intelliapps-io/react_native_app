@@ -1,5 +1,4 @@
 client/node_modules
-client/.expo
 client/.expo-shared
 server/node_modules
 
