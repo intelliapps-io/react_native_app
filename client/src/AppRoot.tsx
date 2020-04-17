@@ -43,7 +43,7 @@ export const AppRoot: React.FC = () => {
             {/* Unauthenticated Routes */}
             <Stack.Screen name="Welcome" component={WelcomeLanding} />
             <Stack.Screen name="Login" component={LoginForm} />
-            <Stack.Screen name="SignUp" component={SignUpForm} />
+            <Stack.Screen name="Sign Up" component={SignUpForm} />
 
             {/* Authenticated Routes */}
             <Stack.Screen name="Home" component={HomePage} />

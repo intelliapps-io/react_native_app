@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from "react-native";
-import { Text } from "@ui-kitten/components";
+import { Text, Layout } from "@ui-kitten/components";
+import { PageLayout } from "../../pages/PageLayout";
 
 interface LoginFormProps {
 
@@ -8,8 +9,8 @@ interface LoginFormProps {
 
 export const LoginForm: React.FC<LoginFormProps> = props => {
   return(
-    <View>
+    <PageLayout level='1' useFlex={true}>
       <Text>Login Form</Text>
-    </View>
+    </PageLayout>
   );
 }

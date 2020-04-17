@@ -34,7 +34,7 @@ export const Navbar: React.FC<NavbarProps & StackHeaderProps> = props => {
     <View>
       <TopNavigation
         alignment='center'
-        title={evaProps => <Text {...evaProps}>{props.scene.route.name}</Text>}
+        title={evaProps => <Text {...evaProps} category='h3' style={{ fontSize: 20 }}>{props.scene.route.name}</Text>}
         accessoryLeft={() =>
           <TopNavigationAction
             onPress={() => navigation.goBack()}
