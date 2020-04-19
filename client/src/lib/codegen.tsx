@@ -52,6 +52,19 @@ export type Group = {
   description: Scalars['String'];
   minMenteeGradeLevel: Scalars['Int'];
   minMentorGradeLevel: Scalars['Int'];
+  mentors?: Maybe<Array<Student>>;
+  mentees: Array<Student>;
+  meetings: Array<Meeting>;
+};
+
+export type Material = {
+  id: Scalars['ID'];
+  title: Scalars['String'];
+  author?: Maybe<Scalars['String']>;
+  type: Scalars['String'];
+  url: Scalars['String'];
+  dueDate: Scalars['DateTime'];
+  notes: Scalars['String'];
 };
 
 export type Meeting = {
@@ -63,6 +76,12 @@ export type Meeting = {
   endMin: Scalars['Int'];
   title: Scalars['String'];
   description: Scalars['String'];
+  location: Scalars['String'];
+  capacity: Scalars['Int'];
+  group: Group;
+  attendingMentors?: Maybe<Array<Student>>;
+  attendingMentees: Array<Student>;
+  materials: Array<Material>;
 };
 
 export type Mutation = {
@@ -114,8 +133,6 @@ export type Student = {
   phone?: Maybe<Scalars['String']>;
   authCount?: Maybe<Scalars['Float']>;
   parents: Array<Parent>;
-  mentor?: Maybe<Student>;
-  mentee?: Maybe<Student>;
   gradeLevel: Scalars['Int'];
 };
 

@@ -1,4 +1,4 @@
-import { InputType, Field } from "type-graphql"
+import { InputType, Field, ID, Int } from "type-graphql"
 import { Length, IsEmail } from "class-validator"
 import { AccountType } from "../../entities/Account"
 
@@ -29,5 +29,15 @@ export class CreateAccountInput {
 
 @InputType()
 class StudentInput extends CreateAccountInput {
-  
+  @Field(type => [String], { nullable: true })
+  parentsEmail?: string[]
+
+  @Field(type => Int)
+  gradeLevel: number
+}
+
+@InputType()
+class ParentInput extends CreateAccountInput {
+  @Field(type => [String], { nullable: true })
+  studentsEmail?: string[]
 }

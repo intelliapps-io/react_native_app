@@ -42,6 +42,19 @@ type Group {
   description: String!
   minMenteeGradeLevel: Int!
   minMentorGradeLevel: Int!
+  mentors: [Student!]
+  mentees: [Student!]!
+  meetings: [Meeting!]!
+}
+
+type Material {
+  id: ID!
+  title: String!
+  author: String
+  type: String!
+  url: String!
+  dueDate: DateTime!
+  notes: String!
 }
 
 type Meeting {
@@ -55,6 +68,12 @@ type Meeting {
   endMin: Int!
   title: String!
   description: String!
+  location: String!
+  capacity: Int!
+  group: Group!
+  attendingMentors: [Student!]
+  attendingMentees: [Student!]!
+  materials: [Material!]!
 }
 
 type Mutation {
@@ -96,8 +115,6 @@ type Student {
   phone: String
   authCount: Float
   parents: [Parent!]!
-  mentor: Student
-  mentee: Student
   gradeLevel: Int!
 }
 

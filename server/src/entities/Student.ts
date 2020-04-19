@@ -10,13 +10,13 @@ export class Student extends Account {
   @JoinTable()
   parents: Parent[]
 
-  @Field(type => Student, { nullable: true })
-  @OneToOne(type => Student, { nullable: true, eager: true, cascade: true })
-  mentor?: Student
+  // @Field(type => [Student], { nullable: true })
+  // @ManyToMany(type => Student, { nullable: true, eager: true, cascade: true })
+  // mentor?: Student[]
 
-  @Field(type => Student, { nullable: true })
-  @OneToOne(type => Student, { nullable: true, eager: true, cascade: true })
-  mentee?: Student
+  // @Field(type => [Student], { nullable: true })
+  // @ManyToMany(type => Student, { nullable: true, eager: true, cascade: true })
+  // mentee?: Student[]
 
   @Field(type => Int)
   @Column('int')
