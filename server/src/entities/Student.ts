@@ -1,22 +1,23 @@
 import { ManyToMany, JoinTable, OneToOne, ChildEntity, Column } from "typeorm";
 import { Account } from "./Account";
 import { Parent } from "./Parent";
-import { Field, ObjectType, Int } from "type-graphql";
+import { Field, ObjectType, Int, Root } from "type-graphql";
+import { Group } from "./Group";
 
 @ObjectType() @ChildEntity()
 export class Student extends Account {
-  @Field(type => [Parent])
-  @ManyToMany(type => Parent, { cascade: true, eager: true })
+  @Field(type => [Parent], { nullable: true })
+  @ManyToMany(type => Parent, parent => parent.children, { cascade: true, eager: true, nullable: true })
   @JoinTable()
   parents: Parent[]
 
-  // @Field(type => [Student], { nullable: true })
-  // @ManyToMany(type => Student, { nullable: true, eager: true, cascade: true })
-  // mentor?: Student[]
+  @Field(type => [Group])
+  @ManyToMany(type => Group, group => group.mentors)
+  mentorGroups: [Group]
 
-  // @Field(type => [Student], { nullable: true })
-  // @ManyToMany(type => Student, { nullable: true, eager: true, cascade: true })
-  // mentee?: Student[]
+  @Field(type => [Group])
+  @ManyToMany(type => Group, group => group.mentees)
+  menteeGroups:  [Group]
 
   @Field(type => Int)
   @Column('int')

@@ -29,6 +29,15 @@ type Admin {
   email: String!
   phone: String
   authCount: Float
+  nickname: String
+}
+
+input CreateAccountInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String
+  password: String!
 }
 
 """
@@ -45,6 +54,13 @@ type Group {
   mentors: [Student!]
   mentees: [Student!]!
   meetings: [Meeting!]!
+}
+
+input GroupInput {
+  name: String!
+  description: String!
+  minMenteeGradeLevel: Int!
+  minMentorGradeLevel: Int!
 }
 
 type Material {
@@ -77,8 +93,21 @@ type Meeting {
 }
 
 type Mutation {
-  signUp(input: SignUpInput!): String!
-  createUser(input: SignUpInput!): User!
+  createStudentAccount(input: StudentInput!): Account!
+  createParentAccount(input: ParentInput!): Account!
+  login(password: String!, email: String!): Account
+  logout: String
+  addParent(parentEmail: String!): Student!
+  removeParent(parentEmail: String!): Student!
+  addStudent(studentEmail: String!): Parent!
+  removeStudent(studentEmail: String!): Parent!
+  createGroup(input: GroupInput!): Group!
+  deleteGroup(id: String!): String!
+  editGroup(input: GroupInput!, id: String!): Group!
+  joinGroupMentee(id: String!): Group!
+  leaveGroupMentee(id: String!): Group!
+  joinGroupMentor(id: String!): Group!
+  leaveGroupMentor(id: String!): Group!
 }
 
 type Parent {
@@ -93,16 +122,29 @@ type Parent {
   children: [Student!]!
 }
 
-type Query {
-  me: User!
-}
-
-input SignUpInput {
+input ParentInput {
   firstName: String!
   lastName: String!
   email: String!
+  phone: String
   password: String!
-  role: UserRole!
+  studentsEmail: [String!]
+}
+
+type Query {
+  me: Account!
+  student(input: QueryStudentInput!): Student!
+  parent(input: QueryParentInput!): Parent!
+}
+
+input QueryParentInput {
+  id: String
+  email: String
+}
+
+input QueryStudentInput {
+  id: String
+  email: String
 }
 
 type Student {
@@ -114,23 +156,18 @@ type Student {
   email: String!
   phone: String
   authCount: Float
-  parents: [Parent!]!
+  parents: [Parent!]
+  mentorGroups: [Group!]!
+  menteeGroups: [Group!]!
   gradeLevel: Int!
 }
 
-type User {
-  id: ID!
+input StudentInput {
   firstName: String!
   lastName: String!
-  name: String!
   email: String!
-  role: UserRole!
-  authCount: Float
-}
-
-"""User access role"""
-enum UserRole {
-  PARENT
-  STUDENT
-  ADMIN
+  phone: String
+  password: String!
+  parentsEmail: [String!]
+  gradeLevel: Int!
 }

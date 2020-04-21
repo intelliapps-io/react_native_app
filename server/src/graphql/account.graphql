@@ -1,0 +1,38 @@
+mutation CreateStudentAccount($input: StudentInput!) {
+  createStudentAccount(input: $input) {
+    ...Account
+  }
+}
+
+mutation CreateParentAccount($input: ParentInput!) {
+  createParentAccount(input: $input) {
+    ...Account
+  }
+}
+
+mutation Login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    ...Account
+  }
+}
+
+mutation Logout {
+  logout
+}
+
+query Me {
+  me {
+    ...Account
+  }
+}
+
+fragment Account on Account {
+  id,
+  accountType,
+  firstName,
+  lastName,
+  name,
+  email,
+  phone,
+  authCount
+}

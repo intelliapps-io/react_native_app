@@ -1,11 +1,25 @@
-// user
-import { CreateUserResolver } from './user/CreateUser'
-import { SignUpResolver } from './user/SignUp'
-import { MeResolver } from './user/Me'
+// account
+import { CreateAccountResolver } from "./account/CreateAccount"
+import { LoginResolver } from './account/Login'
+import { LogoutResolver } from './account/Logout'
+import { MeQueryResolver } from "./account/MeQuery"
+// student
+import { StudentResolver } from "./student/StudentResolver"
+// parent
+import { ParentResolver } from "./parent/ParentResolver"
+// group
+import { GroupResolver } from "./group/GroupResolver"
 
 export const resolvers = [
-  // user
-  CreateUserResolver,
-  SignUpResolver,
-  MeResolver
+  // account
+  MeQueryResolver,
+  CreateAccountResolver,
+  LoginResolver,
+  LogoutResolver,
+  // student
+  StudentResolver,
+  // parent
+  ParentResolver,
+  // group
+  GroupResolver,
 ]

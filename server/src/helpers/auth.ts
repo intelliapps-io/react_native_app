@@ -1,26 +1,28 @@
 import { sign } from "jsonwebtoken";
 import { Response } from "express";
-import { User, UserRole } from "../entities/User";
 import { Req, MyContext } from "../ts/context";
 import { verify } from "jsonwebtoken";
 import { AuthChecker } from "type-graphql";
+import { AccountType, Account } from "../entities/Account";
 
 interface ITokenData {
-  userId: string | null
+  accountId: string | null
   authCount?: number | null
-  role: UserRole | null
+  accountType: AccountType | null
 }
 
 const REFRESH_TOKEN_SECRET = "SOME_RANDOM_TOKEN!";
 const ACCESS_TOKEN_SECRET = "ANOTHER_RANDOM_TOKEN!";
 
-export const createTokens = (user: User) => {
+export const ANY_ACCOUNT_TYPE: AccountType[] = [AccountType['admin'], AccountType['student'], AccountType['parent']]
+
+export const createTokens = (account: Account) => {
   const refreshToken = sign(
-    { userId: user.id, authCount: user.authCount, role: user.role },
+    { accountId: account.id, authCount: account.authCount, accountType: account.accountType },
     REFRESH_TOKEN_SECRET, { expiresIn: "7d" }
   );
   const accessToken = sign(
-    { userId: user.id, role: user.role },
+    { accountId: account.id, accountType: account.accountType },
     ACCESS_TOKEN_SECRET, { expiresIn: "15min" }
   );
 
@@ -29,9 +31,9 @@ export const createTokens = (user: User) => {
 
 export const verifyRefreshToken = (refreshToken: string | null): ITokenData => {
   let data: ITokenData = {
-    userId: null,
+    accountId: null,
     authCount: null,
-    role: null
+    accountType: null
   };
   try {
     if (!refreshToken) return data;
@@ -48,8 +50,8 @@ export const authMiddleware = async (req: Req, res: Response, next: () => void) 
 
   try {
     const data = verify(accessToken, ACCESS_TOKEN_SECRET) as ITokenData;
-    if (data.userId) req.userId = data.userId;
-    if (data.role) req.role = data.role;
+    if (data.accountId) req.accountId = data.accountId;
+    if (data.accountType) req.accountType = data.accountType;
     return next();
   } catch { }
 
@@ -57,38 +59,44 @@ export const authMiddleware = async (req: Req, res: Response, next: () => void) 
 
   const data = verifyRefreshToken(refreshToken);
 
-  const user = await User.findOne({ where: { id: data.userId } });
-  if (!user || user.authCount !== data.authCount) return next(); // token has been invalidated
+  const account = await Account.findOne({ where: { id: data.accountId } });
+  if (!account || account.authCount !== data.authCount) return next(); // token has been invalidated
 
-  const tokens = createTokens(user);
+  const tokens = createTokens(account);
 
   res.cookie("refresh-token", tokens.refreshToken);
   res.cookie("access-token", tokens.accessToken);
-  if (data.userId) req.userId = data.userId;
-  if (data.role) req.role = data.role;
+  if (data.accountId) req.accountId = data.accountId;
+  if (data.accountType) req.accountType = data.accountType;
 
   next();
 }
 
-export const authChecker: AuthChecker<MyContext, UserRole> = (
+export const authChecker: AuthChecker<MyContext, AccountType> = (
   { root, args, context, info },
-  roles,
+  type,
 ) => {
   let isAuthorized = false;
-  const userRole = context.req.role;
+  const accountType = context.req.accountType;
 
-  // admin role has access to all of user 
-  // import
-  roles.forEach(role => {
-    switch (role) {
-      case UserRole["STUDENT"]:
-        isAuthorized = userRole === "STUDENT" || userRole === "PARENT" || userRole === "ADMIN"
+  type.forEach(accType => {
+    let maybeAuth = false
+    switch (accType) {
+      case AccountType['admin']:
+        // admins have access to all options
+        maybeAuth = accountType === 'student' || accountType === 'parent' || accountType === 'admin'
+        if (maybeAuth)
+          isAuthorized = true
         break;
-      case UserRole["PARENT"]:
-        isAuthorized = userRole === "PARENT" || userRole === "ADMIN" 
+      case AccountType['parent']:
+        maybeAuth = accountType === 'parent'
+        if (maybeAuth)
+          isAuthorized = true
         break
-      case UserRole["ADMIN"]:
-        isAuthorized = userRole === "ADMIN";
+      case AccountType['student']:
+        maybeAuth = accountType === 'student'
+        if (maybeAuth)
+          isAuthorized = true
     }
   });
 

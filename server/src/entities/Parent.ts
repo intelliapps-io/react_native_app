@@ -7,12 +7,6 @@ import { Student } from "./Student";
 @ObjectType() @ChildEntity()
 export class Parent extends Account {
   @Field(type => [Student])
-  children(@Root() parent: Parent) {
-    return new Promise((resolve, reject) => {
-      const query = Student.createQueryBuilder()
-      // query.innerJoin('', )
-      resolve([])
-      
-    })
-  }
+  @ManyToMany(type => Student, student => student.parents)
+  children: Student[]
 }

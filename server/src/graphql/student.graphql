@@ -1,0 +1,37 @@
+fragment Student on Student {
+  id,
+  accountType,
+  firstName,
+  lastName,
+  name,
+  email,
+  phone,
+  gradeLevel,
+  parents {
+    id,
+    accountType,
+    firstName,
+    lastName,
+    name,
+    email,
+    phone
+  }
+}
+
+mutation AddParent($parentEmail: String!) {
+  addParent(parentEmail: $parentEmail) {
+    ...Student
+  }
+}
+
+mutation RemoveParent($parentEmail: String!) {
+  removeParent(parentEmail: $parentEmail) {
+    ...Student
+  }
+}
+
+query Student($input: QueryStudentInput!) {
+  student(input: $input) {
+    ...Student
+  }
+}

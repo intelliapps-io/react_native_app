@@ -26,12 +26,12 @@ export class Group extends BaseEntity {
   minMentorGradeLevel: number
 
   @Field(type => [Student], { nullable: true })
-  @ManyToMany(type => Student, { eager: true, cascade: true })
+  @ManyToMany(type => Student, student => student.mentorGroups, { eager: true, cascade: true })
   @JoinTable()
   mentors: Student[]
 
   @Field(type => [Student])
-  @ManyToMany(type => Student, { eager: true, cascade: true })
+  @ManyToMany(type => Student, student => student.menteeGroups, { eager: true, cascade: true })
   @JoinTable()
   mentees: Student[]
 

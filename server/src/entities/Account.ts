@@ -1,5 +1,6 @@
 import { ObjectType, Field, ID, Root, registerEnumType, Arg } from 'type-graphql';
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToOne, TableInheritance } from 'typeorm';
+import { nodeLogger } from '../helpers/helpers';
 
 export enum AccountType {
   admin = 'admin',
@@ -10,14 +11,15 @@ export enum AccountType {
 registerEnumType(AccountType, { name: 'AccountType' })
 
 @ObjectType() @Entity()
-@TableInheritance({ column: { type: "enum", name: "accountType", enum: AccountType } })
+@TableInheritance({ column: { type: "enum", name: "type", enum: AccountType } })
 export class Account extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
   id: string
 
   @Field(type => AccountType)
-  accountType: AccountType
+  @Column({ asExpression: `type` })
+  accountType: string
 
   @Field()
   @Column()

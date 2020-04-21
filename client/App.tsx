@@ -17,9 +17,9 @@ import { HttpLink } from 'apollo-link-http'
 const client = new ApolloClient({
   link: new HttpLink({ 
     credentials: 'include',
-    uri: "http://localhost:3001",
+    uri: "http://10.0.0.16:3001",
     headers: {
-      "Access-Control-Allow-Origin": "http://localhost:3001"
+      "Access-Control-Allow-Origin": "http://10.0.0.16:3001"
     }
   }),
   cache: new InMemoryCache({
@@ -27,7 +27,6 @@ const client = new ApolloClient({
     dataIdFromObject: (object) => object.id
   }),
 })
-
 
 export default () => {
   return (

@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import { UserRole } from "../entities/User";
+import { AccountType } from "../entities/Account";
 
 export interface Req extends Request {
-  userId?: string
-  role?: UserRole
+  accountId?: string
+  accountType?: AccountType
 }
 
 export interface MyContext {

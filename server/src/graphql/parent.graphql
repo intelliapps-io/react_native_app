@@ -1,0 +1,25 @@
+fragment Parent on Parent {
+  id,
+  accountType,
+  firstName,
+  lastName,
+  name,
+  email,
+  phone,
+  children {
+    id,
+    accountType,
+    firstName,
+    lastName,
+    name,
+    email,
+    phone
+  }
+} 
+
+query Parent($input: QueryParentInput!) {
+  parent(input: $input) {
+    ...Parent
+  }
+}
+
