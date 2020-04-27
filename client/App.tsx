@@ -17,9 +17,9 @@ import { HttpLink } from 'apollo-link-http'
 const client = new ApolloClient({
   link: new HttpLink({ 
     credentials: 'include',
-    uri: "http://10.0.0.16:3001",
+    uri: "http://10.0.0.23:3001/graphql",
     headers: {
-      "Access-Control-Allow-Origin": "http://10.0.0.16:3001"
+      "Access-Control-Allow-Origin": "http://10.0.0.23:3001"
     }
   }),
   cache: new InMemoryCache({

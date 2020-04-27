@@ -29,6 +29,8 @@ export const AppRoot: React.FC = () => {
     meQuery = useMeQuery({ onError: (err) => { console.log(err.message) } }),
     me = meQuery.data && meQuery.data.me ? meQuery.data.me : undefined
 
+  console.log(me)
+  
   return (
     <AppContext.Provider value={{ me, meQuery }}>
       <View style={{ flex: 1, marginTop: insets.top }}>

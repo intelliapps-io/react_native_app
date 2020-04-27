@@ -1,10 +1,10 @@
 import react from 'react'
 import { StackNavigationOptions } from '@react-navigation/stack'
-import { User, MeQuery, MeQueryVariables } from './codegen'
+import { Account, MeQuery, MeQueryVariables } from './codegen'
 import { QueryResult } from '@apollo/react-common'
 
 export interface IAppContext {
-  me: User | undefined
+  me: Account | undefined
   meQuery: QueryResult<MeQuery, MeQueryVariables>
 }
 
