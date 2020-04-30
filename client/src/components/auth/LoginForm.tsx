@@ -4,14 +4,15 @@ import { Text, Layout, Input, Icon, Button } from "@ui-kitten/components";
 import { PageLayout } from "../../pages/PageLayout";
 import { useLoginMutation, useMeQuery } from "../../lib/codegen";
 import { ApolloError } from "apollo-client";
+import { useNavigation } from "@react-navigation/native";
 
 interface LoginFormProps {
 
 }
 
 export const LoginForm: React.FC<LoginFormProps> = props => {
-  // user query
-  const meQuery = useMeQuery({ skip: })
+  // nav state
+  const navState = useNavigation()
 
   // form state
   const [email, setEmail] = useState('')
@@ -20,11 +21,22 @@ export const LoginForm: React.FC<LoginFormProps> = props => {
 
   // login mutation
   const [login] = useLoginMutation()
+  const [didLogin, setDidLogin] = useState(false)
+
+  // user query
+  const meQuery = useMeQuery({ skip: !didLogin })
 
   function onLogin() {
+    console.log('pressed')
     login({ variables: { email, password } })
-      .then(() => { })
+      .then(() => {
+        // user logged in
+        setDidLogin(true)
+        console.log('User Logged In Successfully!')
+        navState.navigate('Home')
+      })
       .catch((err: ApolloError) => {
+        // login error
         setError(err.message)
       })
   }
@@ -49,7 +61,7 @@ export const LoginForm: React.FC<LoginFormProps> = props => {
 
       {error && <Text style={{ color: 'red', marginBottom: 20 }}>{error}</Text>}
 
-      <Button onPress={onLogin} style={styles.button}>Create Account</Button>
+      <Button onPress={onLogin} style={styles.button}>Login</Button>
     </PageLayout>
   );
 }

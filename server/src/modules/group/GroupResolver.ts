@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Arg, Authorized, Ctx } from "type-graphql";
+import { Resolver, Mutation, Arg, Authorized, Ctx, Query } from "type-graphql";
 import { Group } from "../../entities/Group";
 import { GroupInput } from "./GroupInput";
 import { ANY_ACCOUNT_TYPE } from "../../helpers/auth";
@@ -8,6 +8,18 @@ import { Student } from "../../entities/Student";
 
 @Resolver()
 export class GroupResolver {
+  @Query(type => Group)
+  @Authorized(ANY_ACCOUNT_TYPE)
+  group(@Arg('id') id: string) {
+    return Group.findOne({ where: { id }})
+  }
+
+  @Query(type => [Group])
+  @Authorized(ANY_ACCOUNT_TYPE)
+  groups() {
+    return Group.find()
+  }
+
   @Mutation(type => Group)
   @Authorized(ANY_ACCOUNT_TYPE)
   async createGroup(@Arg('input') input: GroupInput) {
@@ -23,7 +35,7 @@ export class GroupResolver {
     if (!group)
       throw new Error('No group found with that id')
     await group.remove()
-    return group.id
+    return id
   }
 
   @Mutation(type => Group)
@@ -53,7 +65,7 @@ export class GroupResolver {
     if (!student)
       throw new Error('Please login as a student account')
     
-    if (group.minMenteeGradeLevel < student.gradeLevel)
+    if (group.minMenteeGradeLevel > student.gradeLevel)
       throw new Error(`You must be grade level ${group.minMenteeGradeLevel} or above`)
       
     group.mentees.push(student)
@@ -92,7 +104,7 @@ export class GroupResolver {
     if (!student)
       throw new Error('Please login as a student account')
     
-    if (group.minMentorGradeLevel < student.gradeLevel)
+    if (group.minMentorGradeLevel > student.gradeLevel)
       throw new Error(`You must be grade level ${group.minMentorGradeLevel} or above`)
       
     group.mentors.push(student)

@@ -1,0 +1,9 @@
+fragment Material on Material {
+  id
+  title
+  author
+  type
+  url
+  dueDate
+  notes
+}

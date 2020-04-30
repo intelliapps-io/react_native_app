@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import { PageLayout } from "../PageLayout";
-import { Text, Button, Divider } from "@ui-kitten/components";
+import { Text, Button } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
-import { AppContext } from "../../lib/AppContext";
 import { useNavigation } from "@react-navigation/native";
 
 interface HomePageProps {
@@ -13,19 +12,18 @@ export const HomePage: React.FC<HomePageProps> = props => {
   const navigation = useNavigation()
 
   return (
-    <PageLayout>
-      <Button style={styles.button} activeOpacity={0.6} onPress={() => navigation.navigate('Admin')}>
-        {() => <Text category='h3'>Admin</Text>}
+    <PageLayout useFlex={true}>
+
+      <Button style={styles.button} activeOpacity={0.6} onPress={() => navigation.navigate('Account')}>
+        {() => <Text category='h3'>Account</Text>}
       </Button>
 
-
-      <Button style={styles.button} activeOpacity={0.6} onPress={() => navigation.navigate('Student')} >
-        {() => <Text category='h3'>Student</Text>}
+      <Button style={styles.button} activeOpacity={0.6} onPress={() => navigation.navigate('Meeting')}>
+        {() => <Text category='h3'>Meetings</Text>}
       </Button>
 
-      
-      <Button style={styles.button} activeOpacity={0.6} onPress={() => navigation.navigate('Parent')}>
-        {() => <Text category='h3'>Parent</Text>}
+      <Button style={styles.button} activeOpacity={0.6} onPress={() => navigation.navigate('Group')}>
+        {() => <Text category='h3'>Group</Text>}
       </Button>
     </PageLayout>
   );

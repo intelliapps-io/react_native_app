@@ -1,0 +1,80 @@
+fragment Meeting on Meeting {
+  id
+  title
+  date
+  startMin
+  endMin
+  description
+  location
+  capacity
+  group {
+    id
+    name
+    description
+    minMenteeGradeLevel
+    minMentorGradeLevel
+  }
+  attendingMentors {
+    id,
+    accountType,
+    firstName,
+    lastName,
+    name,
+    email,
+    phone,
+    gradeLevel,
+  }
+  attendingMentees {
+    id,
+    accountType,
+    firstName,
+    lastName,
+    name,
+    email,
+    phone,
+    gradeLevel,
+  }
+  materials {
+		...Material
+  }
+}
+
+query Meeting($id: String!) {
+  meeting(id: $id) {
+    ...Meeting
+  }
+}
+
+query Meetings {
+  meetings {
+    ...Meeting
+  }
+}
+
+mutation CreateMeeting($input: MeetingInput!) {
+  createMeeting(input: $input) {
+    ...Meeting
+  }
+}
+
+mutation UpdateMeeting($id: String!, $input: MeetingInput!) {
+  updateMeeting(id: $id, input: $input) {
+    ...Meeting
+  }
+}
+
+mutation DeleteMeeting($id: String!) {
+  deleteMeeting(id: $id)
+}
+
+mutation JoinMeeting($id: String!) {
+  joinMeeting(id: $id) {
+    ...Meeting
+  }
+}
+
+mutation LeaveMeeting($id: String!) {
+  leaveMeeting(id: $id) {
+    ...Meeting
+  }
+}

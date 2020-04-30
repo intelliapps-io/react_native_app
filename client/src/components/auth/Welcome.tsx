@@ -20,7 +20,7 @@ export const WelcomeLanding: React.FC<WelcomeLandingProps> = props => {
       <Divider />
       <Spacer />
       <Button style={styles.button} status='primary' activeOpacity={0.6} onPress={() => navigation.navigate('Login')}>Login</Button>
-      <Button style={styles.button} status='success' activeOpacity={0.6} onPress={() => navigation.navigate('Sign Up')}>Sign Up</Button>
+      <Button style={styles.button} status='success' activeOpacity={0.6} onPress={() => navigation.navigate('SignUp')}>Sign Up</Button>
     </PageLayout>
   );
 }

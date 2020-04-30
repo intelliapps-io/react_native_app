@@ -12,6 +12,7 @@ type Account {
   email: String!
   phone: String
   authCount: Float
+  meetings: [Meeting!]!
 }
 
 enum AccountType {
@@ -29,6 +30,7 @@ type Admin {
   email: String!
   phone: String
   authCount: Float
+  meetings: [Meeting!]!
   nickname: String
 }
 
@@ -75,7 +77,7 @@ type Material {
 
 type Meeting {
   id: ID!
-  date: DateTime!
+  date: String!
 
   """minutes since midnight"""
   startMin: Int!
@@ -90,6 +92,21 @@ type Meeting {
   attendingMentors: [Student!]
   attendingMentees: [Student!]!
   materials: [Material!]!
+}
+
+input MeetingInput {
+  date: DateTime!
+
+  """minutes since midnight"""
+  startMin: Int!
+
+  """minutes since midnight"""
+  endMin: Int!
+  title: String!
+  description: String!
+  location: String!
+  capacity: Int!
+  groupId: String!
 }
 
 type Mutation {
@@ -108,6 +125,11 @@ type Mutation {
   leaveGroupMentee(id: String!): Group!
   joinGroupMentor(id: String!): Group!
   leaveGroupMentor(id: String!): Group!
+  createMeeting(input: MeetingInput!): Meeting!
+  updateMeeting(input: MeetingInput!, id: String!): Meeting!
+  deleteMeeting(id: String!): String!
+  joinMeeting(id: String!): Meeting!
+  leaveMeeting(id: String!): Meeting!
 }
 
 type Parent {
@@ -119,6 +141,7 @@ type Parent {
   email: String!
   phone: String
   authCount: Float
+  meetings: [Meeting!]!
   children: [Student!]!
 }
 
@@ -135,6 +158,10 @@ type Query {
   me: Account!
   student(input: QueryStudentInput!): Student!
   parent(input: QueryParentInput!): Parent!
+  group(id: String!): Group!
+  groups: [Group!]!
+  meeting(id: String!): Meeting!
+  meetings: [Meeting!]!
 }
 
 input QueryParentInput {
@@ -156,6 +183,7 @@ type Student {
   email: String!
   phone: String
   authCount: Float
+  meetings: [Meeting!]!
   parents: [Parent!]
   mentorGroups: [Group!]!
   menteeGroups: [Group!]!

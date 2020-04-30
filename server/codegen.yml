@@ -10,3 +10,13 @@ generates:
     config:
       withHooks: true
       skipTypename: true
+  ../client/src/lib/introspection.json:
+    plugins:
+      - introspection
+    config:
+      minify: true
+  ../client/src/lib/introspectionResult.ts:
+    plugins:
+      - fragment-matcher
+    config:
+      apolloClientVersion: 2

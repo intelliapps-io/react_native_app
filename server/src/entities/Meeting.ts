@@ -11,7 +11,7 @@ export class Meeting extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
-  @Field(type => Date)
+  @Field(type => String)
   @Column('date')
   date: Date
 

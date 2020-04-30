@@ -1,5 +1,6 @@
 client/node_modules
 client/.expo-shared
+client/.expo/web
 server/node_modules
 
 npm-debug.*

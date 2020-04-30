@@ -9,6 +9,8 @@ import { StudentResolver } from "./student/StudentResolver"
 import { ParentResolver } from "./parent/ParentResolver"
 // group
 import { GroupResolver } from "./group/GroupResolver"
+// meeting
+import { MeetingResolver } from "./meeting/MeetingResolver"
 
 export const resolvers = [
   // account
@@ -22,4 +24,6 @@ export const resolvers = [
   ParentResolver,
   // group
   GroupResolver,
+  // meeting
+  MeetingResolver,
 ]

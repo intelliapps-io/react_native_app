@@ -34,5 +34,8 @@ fragment Account on Account {
   name,
   email,
   phone,
-  authCount
+  authCount,
+  meetings {
+    ...Meeting
+  }
 }
